@@ -257,6 +257,7 @@ const year = new Date().getFullYear();
         <nav class="contact-links" aria-label="Contact links">
           <a href="mailto:malcolm.sheehan@outlook.com">Email</a>
           <a href="https://www.linkedin.com/in/malcolmsheehan" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://malcolmsheehan.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>
         </nav>
       </section>
 
@@ -277,7 +278,7 @@ const year = new Date().getFullYear();
 
     async function loadWriting() {
       try {
-        const res = await fetch('https://malcolmsheehan.substack.com/feed');
+        const res = await fetch('/api/feed');
         const text = await res.text();
         const xml = new DOMParser().parseFromString(text, 'text/xml');
         const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
