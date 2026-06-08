@@ -281,7 +281,7 @@ const year = new Date().getFullYear();
         const res = await fetch('/api/feed');
         const text = await res.text();
         const xml = new DOMParser().parseFromString(text, 'text/xml');
-        const items = Array.from(xml.querySelectorAll('item')).slice(0, 6);
+        const items = Array.from(xml.getElementsByTagName('item')).slice(0, 6);
 
         if (!list) return;
         list.innerHTML = '';
@@ -295,9 +295,9 @@ const year = new Date().getFullYear();
         }
 
         for (const item of items) {
-          const title = item.querySelector('title')?.textContent ?? '';
-          const link = item.querySelector('link')?.textContent ?? '#';
-          const pubDate = item.querySelector('pubDate')?.textContent ?? '';
+          const title = item.getElementsByTagName('title')[0]?.textContent ?? '';
+          const link = item.getElementsByTagName('link')[0]?.textContent ?? '#';
+          const pubDate = item.getElementsByTagName('pubDate')[0]?.textContent ?? '';
           const date = pubDate ? formatDate(pubDate) : '';
 
           const li = document.createElement('li');
