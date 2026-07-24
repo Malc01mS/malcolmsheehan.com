@@ -1,6 +1,8 @@
 ---
 import readingData from '../../public/reading.json';
+import writingData from '../../public/writing.json';
 const books = readingData;
+const essays = writingData;
 const year = new Date().getFullYear();
 ---
 <!DOCTYPE html>
@@ -189,31 +191,6 @@ const year = new Date().getFullYear();
       letter-spacing: 0.06em;
     }
 
-    /* Skeleton */
-    .skeleton {
-      opacity: 0.35;
-      pointer-events: none;
-    }
-
-    .skeleton-title {
-      font-family: 'EB Garamond', serif;
-      font-size: 18px;
-      color: var(--muted);
-    }
-
-    .skeleton-date {
-      font-size: 11px;
-      color: var(--muted);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .writing-forthcoming {
-      font-family: 'EB Garamond', serif;
-      font-size: 18px;
-      color: var(--muted);
-    }
-
     /* Responsive */
     @media (max-width: 600px) {
       .name {
@@ -233,10 +210,13 @@ const year = new Date().getFullYear();
 
       <section aria-labelledby="writing-label">
         <p class="section-label" id="writing-label">Writing</p>
-        <ul class="writing-list" id="writing-list">
-          <li class="skeleton"><span class="skeleton-title">Loading</span><span class="skeleton-date">— —</span></li>
-          <li class="skeleton"><span class="skeleton-title">Loading</span><span class="skeleton-date">— —</span></li>
-          <li class="skeleton"><span class="skeleton-title">Loading</span><span class="skeleton-date">— —</span></li>
+        <ul class="writing-list">
+          {essays.map((essay) => (
+            <li>
+              <a href={essay.url} class="essay-title" target="_blank" rel="noopener noreferrer">{essay.title}</a>
+              <span class="essay-date">{essay.date}</span>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -268,52 +248,6 @@ const year = new Date().getFullYear();
     </div>
   </main>
 
-  <script>
-    const list = document.getElementById('writing-list');
-
-    function formatDate(dateStr) {
-      const d = new Date(dateStr);
-      return d.toLocaleString('en-US', { month: 'short', year: 'numeric' });
-    }
-
-    async function loadWriting() {
-      try {
-        const res = await fetch('/api/feed');
-        const text = await res.text();
-        const xml = new DOMParser().parseFromString(text, 'text/xml');
-        const items = Array.from(xml.getElementsByTagName('item')).slice(0, 6);
-
-        if (!list) return;
-        list.innerHTML = '';
-
-        if (items.length === 0) {
-          const li = document.createElement('li');
-          li.className = 'writing-forthcoming';
-          li.textContent = 'Essays forthcoming.';
-          list.appendChild(li);
-          return;
-        }
-
-        for (const item of items) {
-          const title = item.getElementsByTagName('title')[0]?.textContent ?? '';
-          const link = item.getElementsByTagName('link')[0]?.textContent ?? '#';
-          const pubDate = item.getElementsByTagName('pubDate')[0]?.textContent ?? '';
-          const date = pubDate ? formatDate(pubDate) : '';
-
-          const li = document.createElement('li');
-          li.innerHTML = `
-            <a href="${link}" class="essay-title" target="_blank" rel="noopener noreferrer">${title}</a>
-            <span class="essay-date">${date}</span>
-          `;
-          list.appendChild(li);
-        }
-      } catch {
-        if (list) list.innerHTML = '';
-      }
-    }
-
-    loadWriting();
-  </script>
 
 </body>
 </html>
