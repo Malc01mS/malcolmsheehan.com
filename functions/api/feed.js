@@ -1,5 +1,12 @@
 export async function onRequest() {
-  const response = await fetch('https://malcolmsheehan.substack.com/feed');
+  const response = await fetch('https://malcolmsheehan.substack.com/feed', {
+    cf: { cacheTtl: 300, cacheEverything: true },
+  });
+
+  if (!response.ok) {
+    return new Response('', { status: 502 });
+  }
+
   const text = await response.text();
   return new Response(text, {
     headers: {
