@@ -1,0 +1,177 @@
+---
+import projectsData from '../../../public/projects.json';
+const projects = projectsData;
+const url = 'https://malcolmsheehan.com/projects';
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Malcolm Sheehan</title>
+  <meta name="description" content="Projects by Malcolm Sheehan." />
+  <meta property="og:title" content="Projects — Malcolm Sheehan" />
+  <meta property="og:description" content="Projects by Malcolm Sheehan." />
+  <meta property="og:url" content={url} />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text: #1c1c1a;
+      --muted: #7a7a72;
+      --subtle: #c8c6be;
+      --bg: #f2f0ea;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+    }
+
+    .hero {
+      margin-bottom: 80px;
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--subtle);
+    }
+
+    .name {
+      font-family: 'EB Garamond', serif;
+      font-size: 42px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+
+    section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .writing-list {
+      list-style: none;
+    }
+
+    .writing-list li {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .writing-list li:first-child {
+      border-top: 1px solid var(--subtle);
+    }
+
+    .essay-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--text);
+      text-decoration: none;
+      line-height: 1.3;
+      letter-spacing: 0.01em;
+      transition: opacity 0.15s;
+    }
+
+    .essay-title:hover { opacity: 0.5; }
+
+    .essay-title:focus-visible {
+      outline: 2px solid var(--text);
+      outline-offset: 2px;
+      border-radius: 1px;
+    }
+
+    .essay-date {
+      font-size: 11px;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.04em;
+    }
+
+    .back {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--subtle);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .back:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    footer {
+      margin-top: 100px;
+      padding-top: 24px;
+      border-top: 1px solid var(--subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-size: 11px;
+      color: var(--subtle);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 600px) {
+      .name { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="container">
+
+      <div class="hero">
+        <h1 class="name">Projects</h1>
+      </div>
+
+      <section aria-labelledby="projects-label">
+        <p class="section-label" id="projects-label">All projects</p>
+        <ul class="writing-list">
+          {projects.map((project) => (
+            <li>
+              <a href={`/projects/${project.slug}`} class="essay-title">{project.title}</a>
+              <span class="essay-date">{project.status}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <footer role="contentinfo">
+        <a href="/" class="back">← Malcolm Sheehan</a>
+        <span>© {new Date().getFullYear()}</span>
+      </footer>
+
+    </div>
+  </main>
+</body>
+</html>

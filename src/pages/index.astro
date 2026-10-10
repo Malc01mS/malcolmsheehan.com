@@ -1,8 +1,10 @@
 ---
 import readingData from '../../public/reading.json';
 import writingData from '../../public/writing.json';
+import projectsData from '../../public/projects.json';
 const books = readingData;
 const essays = writingData;
+const projects = projectsData;
 const year = new Date().getFullYear();
 ---
 <!DOCTYPE html>
@@ -11,7 +13,7 @@ const year = new Date().getFullYear();
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Malcolm Sheehan</title>
-  <meta name="description" content="Malcolm Sheehan — writing and reading." />
+  <meta name="description" content="Malcolm Sheehan — writing, projects, and reading." />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -215,6 +217,18 @@ const year = new Date().getFullYear();
             <li>
               <a href={essay.url} class="essay-title" target="_blank" rel="noopener noreferrer">{essay.title}</a>
               <span class="essay-date">{essay.date}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="projects-label">
+        <p class="section-label" id="projects-label">Projects</p>
+        <ul class="writing-list">
+          {projects.map((project) => (
+            <li>
+              <a href={`/projects/${project.slug}`} class="essay-title">{project.title}</a>
+              <span class="essay-date">{project.status}</span>
             </li>
           ))}
         </ul>

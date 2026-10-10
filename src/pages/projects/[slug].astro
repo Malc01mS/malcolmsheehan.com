@@ -1,0 +1,155 @@
+---
+import projectsData from '../../../public/projects.json';
+
+export function getStaticPaths() {
+  return projectsData.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const canonicalUrl = `https://malcolmsheehan.com/projects/${project.slug}`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{project.title} — Malcolm Sheehan</title>
+  <meta name="description" content={project.description} />
+  <meta property="og:title" content={`${project.title} — Malcolm Sheehan`} />
+  <meta property="og:description" content={project.description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --text: #1c1c1a;
+      --muted: #7a7a72;
+      --subtle: #c8c6be;
+      --bg: #f2f0ea;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 580px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+    }
+
+    .hero {
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--subtle);
+    }
+
+    .status-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .title {
+      font-family: 'EB Garamond', serif;
+      font-size: 36px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .description {
+      margin-top: 24px;
+      font-size: 16px;
+      font-family: 'EB Garamond', serif;
+      color: var(--muted);
+      line-height: 1.65;
+      font-style: italic;
+    }
+
+    .external-link {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 32px;
+      font-size: 13px;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 1px;
+      transition: opacity 0.15s;
+    }
+
+    .external-link:hover { opacity: 0.5; }
+
+    .back {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--subtle);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .back:hover {
+      color: var(--text);
+      border-color: var(--text);
+    }
+
+    footer {
+      margin-top: 100px;
+      padding-top: 24px;
+      border-top: 1px solid var(--subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer span {
+      font-size: 11px;
+      color: var(--subtle);
+      letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 600px) {
+      .title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="container">
+
+      <div class="hero">
+        <p class="status-label">{project.status}</p>
+        <h1 class="title">{project.title}</h1>
+        <p class="description">{project.description}</p>
+        {project.url && (
+          <a href={project.url} class="external-link" target="_blank" rel="noopener noreferrer">
+            View project →
+          </a>
+        )}
+      </div>
+
+      <footer role="contentinfo">
+        <a href="/projects" class="back">← Projects</a>
+        <span>© {new Date().getFullYear()}</span>
+      </footer>
+
+    </div>
+  </main>
+</body>
+</html>
