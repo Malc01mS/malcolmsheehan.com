@@ -210,18 +210,6 @@ const year = new Date().getFullYear();
         <h1 class="name">Malcolm<br />Sheehan</h1>
       </div>
 
-      <section aria-labelledby="writing-label">
-        <p class="section-label" id="writing-label">Writing</p>
-        <ul class="writing-list">
-          {essays.map((essay) => (
-            <li>
-              <a href={essay.url} class="essay-title" target="_blank" rel="noopener noreferrer">{essay.title}</a>
-              <span class="essay-date">{essay.date}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
       <section aria-labelledby="projects-label">
         <p class="section-label" id="projects-label">Projects</p>
         <ul class="writing-list">
@@ -229,6 +217,18 @@ const year = new Date().getFullYear();
             <li>
               <a href={`/projects/${project.slug}`} class="essay-title">{project.title}</a>
               <span class="essay-date">{project.status}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="writing-label">
+        <p class="section-label" id="writing-label">Writing</p>
+        <ul class="writing-list">
+          {essays.map((essay) => (
+            <li>
+              <a href={essay.url} class="essay-title" target="_blank" rel="noopener noreferrer">{essay.title}</a>
+              <span class="essay-date">{essay.date}</span>
             </li>
           ))}
         </ul>
